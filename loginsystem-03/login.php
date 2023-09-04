@@ -8,7 +8,20 @@
                 <input type="password" name="pwd" placeholder="Password...">
                 <button type="submit" name="submit">Log In</button>
             </form>
-            
+            <div>
+                <?php 
+                
+                if (isset($_GET["error"])) 
+                {
+                    if ($_GET["error"] == "emptyinput") {
+                        echo "<p>Preencha todos os campos</p>";
+                    } else if ($_GET["error"] == "wornglogin") {
+                        echo "<p>Senha ou usuário incorreto</p>";
+                    } 
+                }
+                
+                ?>
+            </div>
         </section>
 
     <?php 

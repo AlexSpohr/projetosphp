@@ -18,16 +18,6 @@
         return false; 
     }
 
-    /*function invalidEmail($email) : bool
-    {
-        if(filter_var($email, FILTER_VALIDATE_EMAIL)) 
-        {
-            return true; 
-        } 
-        return false;  
-        
-    }
-    */
     function invalidEmail($email) : bool 
     {
         return !filter_var($email, FILTER_VALIDATE_EMAIL);
@@ -93,5 +83,34 @@
         } 
         return false; 
     }
+
+    function loginUser($conn, $username, $pwd) 
+    {
+        $uidExists = uidExists($conn, $username, $username);
+
+        if ($uidExists === false)
+        {
+            header("location:../signup.php?wronglogin"); 
+            exit();
+        }
+
+        $pwdHashed = $uidExists["usersPwd"]; 
+        $checkPwd = password_verify($pwdHashed, $pwd);
+
+        if ($checkPwd === false) 
+        {
+            header("location:../signup.php?wronglogin");
+            exit(); 
+        }
+        else if ($checkPwd === true)
+        {
+            session_start(); 
+            $_SESSION["usersid"] = $uidExists["usersId"];
+            $_SESSION["usersuid"] = $uidExists["usersUid"];
+            header("location:../index.php");
+            exit(); 
+        }
+    }
+
 
     

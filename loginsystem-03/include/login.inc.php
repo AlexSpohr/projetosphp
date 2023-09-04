@@ -13,6 +13,8 @@
             exit();
         }
 
+        loginUser($conn, $username, $pwd);
+
     } 
     else {
         header("location:../login.php");
